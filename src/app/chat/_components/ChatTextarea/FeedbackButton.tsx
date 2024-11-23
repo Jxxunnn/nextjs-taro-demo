@@ -1,6 +1,6 @@
 import { Button, ButtonProps } from '@mui/joy';
 
-interface FeedbackButtonProps extends ButtonProps {}
+type FeedbackButtonProps = ButtonProps;
 
 export default function FeedbackButton(props: FeedbackButtonProps) {
   return (
