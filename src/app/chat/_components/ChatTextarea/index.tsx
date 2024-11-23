@@ -1,6 +1,10 @@
 import SendIcon from '@mui/icons-material/Send';
-import { Box, Button, IconButton, Textarea } from '@mui/joy';
+import { Box, IconButton, Textarea } from '@mui/joy';
 import { useState } from 'react';
+import FeedbackButton from './FeedbackButton';
+import ShareKakaoTalkButton from './ShareKakaoTalkButton';
+import ShareThreadsButton from './ShareThreadsButton';
+import ShareXButton from './ShareXButton';
 
 export default function ChatTextarea() {
   const [message, setMessage] = useState('');
@@ -26,18 +30,10 @@ export default function ChatTextarea() {
       }}
       startDecorator={
         <Box sx={{ display: 'flex', gap: 0.5, flex: 1 }}>
-          <IconButton variant="outlined" color="neutral">
-            👍
-          </IconButton>
-          <IconButton variant="outlined" color="neutral">
-            🏖
-          </IconButton>
-          <IconButton variant="outlined" color="neutral">
-            😍
-          </IconButton>
-          <Button variant="outlined" color="neutral" sx={{ ml: 'auto' }}>
-            Give us feedback 🙏
-          </Button>
+          <ShareXButton />
+          <ShareThreadsButton />
+          <ShareKakaoTalkButton />
+          <FeedbackButton sx={{ ml: 'auto' }} />
         </Box>
       }
       endDecorator={
