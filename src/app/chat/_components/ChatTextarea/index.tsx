@@ -1,22 +1,34 @@
 import SendIcon from '@mui/icons-material/Send';
 import { Box, IconButton, Textarea } from '@mui/joy';
-import { useState } from 'react';
+import { ChangeEventHandler } from 'react';
 import FeedbackButton from './FeedbackButton';
 import ShareKakaoTalkButton from './ShareKakaoTalkButton';
 import ShareThreadsButton from './ShareThreadsButton';
 import ShareXButton from './ShareXButton';
 
-export default function ChatTextarea() {
-  const [message, setMessage] = useState('');
+interface ChatTextareaProps {
+  value: string;
+  onChange: ChangeEventHandler<HTMLTextAreaElement>;
+  onSubmit: () => void;
+}
 
+export default function ChatTextarea({ value, onChange, onSubmit }: ChatTextareaProps) {
   return (
     <Textarea
+      autoFocus
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' && event.shiftKey) return;
+
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          onSubmit();
+        }
+      }}
       placeholder="Type in here…"
-      required
       minRows={2}
       maxRows={4}
-      value={message}
-      onChange={(event) => setMessage(event.target.value)}
+      value={value}
+      onChange={onChange}
       sx={{
         '--Textarea-focusedInset': 'var(--any, )',
         '--Textarea-focusedThickness': '0.25rem',
@@ -38,10 +50,13 @@ export default function ChatTextarea() {
       }
       endDecorator={
         <IconButton
+          type="submit"
+          disabled={!value}
           size="md"
           sx={{
             ml: 'auto',
             backgroundColor: 'var(--joy-palette-primary-plainColor)',
+            opacity: value ? 1 : 0.5,
             '&:hover': {
               opacity: 0.8,
               backgroundColor: 'var(--joy-palette-primary-plainColor)',
