@@ -7,14 +7,12 @@ import { ChangeEventHandler, FormEventHandler, useEffect, useRef, useState } fro
 import ChatList, { ChatMessage } from './_components/ChatList';
 import ChatTextarea from './_components/ChatTextarea';
 import TarotDeck from './_components/TarotDeck';
-import { useSendQuestionMutation } from './_service/query';
 
 export default function ChatPage() {
   const [message, setMessage] = useState('');
   const [chatList, setChatList] = useState<ChatMessage[]>([]);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [drawingCard, setDrawingCard] = useState(false);
-  const { mutate } = useSendQuestionMutation();
 
   useEffect(function sendDelayedWelcomeMessage() {
     const timer = setTimeout(() => {

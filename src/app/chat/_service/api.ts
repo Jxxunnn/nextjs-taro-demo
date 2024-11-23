@@ -25,7 +25,7 @@ export async function sendQuestion({ question_message, card }: SendQuestionReque
 
     const json = await response.json();
     return json;
-  } catch (error) {
+  } catch {
     throw new Error('Failed to send question');
   }
 }
