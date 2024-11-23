@@ -1,6 +1,6 @@
 import SendIcon from '@mui/icons-material/Send';
 import { Box, IconButton, Textarea } from '@mui/joy';
-import { ChangeEventHandler } from 'react';
+import { ChangeEventHandler, useState } from 'react';
 import FeedbackButton from './FeedbackButton';
 import ShareKakaoTalkButton from './ShareKakaoTalkButton';
 import ShareThreadsButton from './ShareThreadsButton';
@@ -13,13 +13,23 @@ interface ChatTextareaProps {
 }
 
 export default function ChatTextarea({ value, onChange, onSubmit }: ChatTextareaProps) {
+  const [isComposing, setIsComposing] = useState(false);
+
+  const handleCompositionStart = () => {
+    setIsComposing(true);
+  };
+
+  const handleCompositionEnd = () => {
+    setIsComposing(false);
+  };
+
   return (
     <Textarea
       autoFocus
       onKeyDown={(event) => {
         if (event.key === 'Enter' && event.shiftKey) return;
 
-        if (event.key === 'Enter') {
+        if (event.key === 'Enter' && !isComposing) {
           event.preventDefault();
           onSubmit();
         }
@@ -29,6 +39,8 @@ export default function ChatTextarea({ value, onChange, onSubmit }: ChatTextarea
       maxRows={4}
       value={value}
       onChange={onChange}
+      onCompositionStart={handleCompositionStart}
+      onCompositionEnd={handleCompositionEnd}
       sx={{
         '--Textarea-focusedInset': 'var(--any, )',
         '--Textarea-focusedThickness': '0.25rem',
