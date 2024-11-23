@@ -1,6 +1,6 @@
 import SendIcon from '@mui/icons-material/Send';
 import { Box, IconButton, Textarea } from '@mui/joy';
-import { ChangeEventHandler, useState } from 'react';
+import { ChangeEventHandler, RefObject, useState } from 'react';
 import FeedbackButton from './FeedbackButton';
 import ShareKakaoTalkButton from './ShareKakaoTalkButton';
 import ShareThreadsButton from './ShareThreadsButton';
@@ -10,9 +10,10 @@ interface ChatTextareaProps {
   value: string;
   onChange: ChangeEventHandler<HTMLTextAreaElement>;
   onSubmit: () => void;
+  textareaRef: RefObject<HTMLTextAreaElement>;
 }
 
-export default function ChatTextarea({ value, onChange, onSubmit }: ChatTextareaProps) {
+export default function ChatTextarea({ value, onChange, onSubmit, textareaRef }: ChatTextareaProps) {
   const [isComposing, setIsComposing] = useState(false);
 
   const handleCompositionStart = () => {
@@ -25,7 +26,6 @@ export default function ChatTextarea({ value, onChange, onSubmit }: ChatTextarea
 
   return (
     <Textarea
-      autoFocus
       onKeyDown={(event) => {
         if (event.key === 'Enter' && event.shiftKey) return;
 
@@ -78,6 +78,11 @@ export default function ChatTextarea({ value, onChange, onSubmit }: ChatTextarea
           <SendIcon htmlColor="#ffffff" />
         </IconButton>
       }
+      slotProps={{
+        textarea: {
+          ref: textareaRef,
+        },
+      }}
     />
   );
 }
