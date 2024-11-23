@@ -6,7 +6,11 @@ interface SendQuestionRequest {
   card: (typeof tarotCard)[keyof typeof tarotCard];
 }
 
-export async function sendQuestion({ question_message, card }: SendQuestionRequest) {
+interface SendQuestionResponse {
+  answer_message: string;
+}
+
+export async function sendQuestion({ question_message, card }: SendQuestionRequest): Promise<SendQuestionResponse> {
   try {
     const response = await fetch(`${baseUrl}/v0/tarot`, {
       method: 'POST',
@@ -19,8 +23,8 @@ export async function sendQuestion({ question_message, card }: SendQuestionReque
       throw new Error('Failed to send question');
     }
 
-    const { answer } = await response.json();
-    return answer;
+    const json = await response.json();
+    return json;
   } catch (error) {
     throw new Error('Failed to send question');
   }
