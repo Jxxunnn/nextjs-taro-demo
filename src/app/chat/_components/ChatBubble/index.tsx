@@ -10,6 +10,7 @@ export default function ChatBubble({ isSender, message }: ChatBubbleProps) {
   return (
     <Box
       position="relative"
+      right={isSender ? '9px' : undefined}
       paddingY="6px"
       paddingX="8px"
       bgcolor={isSender ? '#007AFF' : '#F2F2F7'}
