@@ -23,7 +23,7 @@ export default function ChatList() {
     }, 1000);
 
     return () => clearTimeout(timer);
-  });
+  }, []);
 
   return (
     <Stack gap="12px">
