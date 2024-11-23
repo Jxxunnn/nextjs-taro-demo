@@ -1,12 +1,14 @@
 import { Box, Typography } from '@mui/joy';
 import BubbleTipSvg from './BubbleTipSvg';
+import TypingIndicator from './TypingIndicator';
 
 interface ChatBubbleProps {
   isSender?: boolean;
+  isTyping?: boolean;
   message: string;
 }
 
-export default function ChatBubble({ isSender, message }: ChatBubbleProps) {
+export default function ChatBubble({ isSender, isTyping, message }: ChatBubbleProps) {
   return (
     <Box
       position="relative"
@@ -19,6 +21,8 @@ export default function ChatBubble({ isSender, message }: ChatBubbleProps) {
         borderTopRightRadius: isSender ? 0 : undefined,
         borderTopLeftRadius: isSender ? undefined : 0,
       }}
+      display={isTyping ? 'flex' : undefined}
+      alignItems={isTyping ? 'center' : undefined}
     >
       <BubbleTipSvg
         position={isSender ? 'right' : 'left'}
@@ -30,9 +34,16 @@ export default function ChatBubble({ isSender, message }: ChatBubbleProps) {
           right: isSender ? '-7px' : undefined,
         }}
       />
-      <Typography level="body-md" textColor={isSender ? '#ffffff' : '#2C2C2E'}>
-        {message}
-      </Typography>
+      {isTyping && (
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <TypingIndicator />
+        </Box>
+      )}
+      {!isTyping && (
+        <Typography level="body-md" textColor={isSender ? '#ffffff' : '#2C2C2E'}>
+          {message}
+        </Typography>
+      )}
     </Box>
   );
 }
