@@ -5,6 +5,7 @@ export interface ChatMessage {
   id: number;
   message: string;
   isSender: boolean;
+  isTyping?: boolean;
 }
 
 interface ChatListProps {
