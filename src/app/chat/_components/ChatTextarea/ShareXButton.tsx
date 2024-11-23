@@ -10,6 +10,7 @@ export default function ShareXButton() {
 
   return (
     <IconButton
+      type="button"
       variant="outlined"
       color="neutral"
       onClick={(event) => {

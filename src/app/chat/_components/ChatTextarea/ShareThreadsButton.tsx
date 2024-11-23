@@ -12,6 +12,7 @@ export default function ShareThreadsButton() {
 
   return (
     <IconButton
+      type="button"
       variant="outlined"
       color="neutral"
       onClick={(event) => {
