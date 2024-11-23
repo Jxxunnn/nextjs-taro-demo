@@ -1,19 +1,20 @@
 import SendIcon from '@mui/icons-material/Send';
-import { Box, IconButton, Textarea } from '@mui/joy';
+import { Box, IconButton, Textarea, TextareaProps } from '@mui/joy';
 import { ChangeEventHandler, RefObject, useState } from 'react';
 import FeedbackButton from './FeedbackButton';
 import ShareKakaoTalkButton from './ShareKakaoTalkButton';
 import ShareThreadsButton from './ShareThreadsButton';
 import ShareXButton from './ShareXButton';
 
-interface ChatTextareaProps {
+interface ChatTextareaProps extends TextareaProps {
   value: string;
   onChange: ChangeEventHandler<HTMLTextAreaElement>;
   onSubmit: () => void;
   textareaRef: RefObject<HTMLTextAreaElement>;
+  disabled: boolean;
 }
 
-export default function ChatTextarea({ value, onChange, onSubmit, textareaRef }: ChatTextareaProps) {
+export default function ChatTextarea({ value, onChange, onSubmit, textareaRef, disabled }: ChatTextareaProps) {
   const [isComposing, setIsComposing] = useState(false);
 
   const handleCompositionStart = () => {
@@ -26,6 +27,7 @@ export default function ChatTextarea({ value, onChange, onSubmit, textareaRef }:
 
   return (
     <Textarea
+      disabled={disabled}
       onKeyDown={(event) => {
         if (event.key === 'Enter' && event.shiftKey) return;
 
