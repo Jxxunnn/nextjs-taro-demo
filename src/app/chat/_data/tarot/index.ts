@@ -1,7 +1,7 @@
 import { StaticImageData } from 'next/image';
 import images from './images';
 
-export interface TaroCard {
+export interface TarotCard {
   name: string;
   id: string;
   imgSrc: StaticImageData;
