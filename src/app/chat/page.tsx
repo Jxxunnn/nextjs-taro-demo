@@ -78,7 +78,15 @@ export default function ChatPage() {
     <>
       <Stack flex={1} paddingBottom="32px" height={'100%'}>
         <Box flex={1} paddingTop="32px" width="100%" overflow="auto">
-          <Box maxWidth={theme.breakpoints.values.md} marginX="auto" paddingBottom="32px" paddingX="32px">
+          <Box
+            maxWidth={theme.breakpoints.values.md}
+            marginX="auto"
+            paddingBottom="32px"
+            paddingX={{
+              xs: '16px',
+              md: '32px',
+            }}
+          >
             <ChatList chatList={chatList} />
           </Box>
         </Box>
@@ -88,8 +96,14 @@ export default function ChatPage() {
           maxWidth={theme.breakpoints.values.md}
           marginX="auto"
           width={'100%'}
-          paddingRight="32px"
-          paddingLeft="72px"
+          paddingRight={{
+            xs: '16px',
+            md: '32px',
+          }}
+          paddingLeft={{
+            xs: '16px',
+            md: '72px',
+          }}
         >
           <ChatTextarea
             value={message}
