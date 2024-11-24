@@ -1,18 +1,20 @@
 'use client';
 
 import theme from '@/lib/mui/theme';
-import { Box, DialogContent, DialogTitle, Modal, ModalDialog, Stack } from '@mui/joy';
+import { Box, CircularProgress, Modal, Stack } from '@mui/joy';
 
 import { ChangeEventHandler, FormEventHandler, useEffect, useRef, useState } from 'react';
 import ChatList, { ChatMessage } from './_components/ChatList';
 import ChatTextarea from './_components/ChatTextarea';
-import TarotDeck from './_components/TarotDeck';
+import TaroDeck from './_components/TaroDeck';
+import { useSendQuestionMutation } from './_service/query';
 
 export default function ChatPage() {
   const [message, setMessage] = useState('');
   const [chatList, setChatList] = useState<ChatMessage[]>([]);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [drawingCard, setDrawingCard] = useState(false);
+  const { mutate, isLoading } = useSendQuestionMutation();
 
   useEffect(function sendDelayedWelcomeMessage() {
     const timer = setTimeout(() => {
@@ -114,13 +116,44 @@ export default function ChatPage() {
           />
         </Box>
       </Stack>
-      <Modal open={drawingCard}>
-        <ModalDialog>
-          <DialogTitle>타로 카드 뽑기</DialogTitle>
-          <DialogContent>
-            <TarotDeck />
-          </DialogContent>
-        </ModalDialog>
+      <Modal
+        open={drawingCard}
+        slotProps={{
+          backdrop: {
+            sx: {
+              backdropFilter: 'unset',
+            },
+          },
+        }}
+      >
+        <TaroDeck
+          onCardSelect={(text, cardId) => {
+            addChatMessage(text, false);
+            mutate(
+              { question_message: chatList.filter((chat) => chat.isSender).slice(-1)[0].message, card: cardId },
+
+              {
+                onSuccess: (data) => {
+                  addChatMessage(data.answer_message, false);
+                },
+                onSettled: () => {
+                  setDrawingCard(false);
+                },
+              }
+            );
+          }}
+        />
+      </Modal>
+      <Modal open={isLoading} slotProps={{ backdrop: { sx: { backdropFilter: 'unset' } } }}>
+        <Box
+          display="grid"
+          sx={{
+            placeItems: 'center',
+            height: '100%',
+          }}
+        >
+          <CircularProgress />
+        </Box>
       </Modal>
     </>
   );
