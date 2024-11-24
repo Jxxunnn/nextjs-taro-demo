@@ -1,6 +1,6 @@
 const baseUrl = 'https://c895-218-146-42-40.ngrok-free.app';
 
-interface SendQuestionRequest {
+export interface SendQuestionRequest {
   question_message: string;
   card:
     | 'M_00'
