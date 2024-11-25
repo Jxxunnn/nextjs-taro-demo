@@ -2,6 +2,7 @@ import ThemeRegistry from '@/lib/mui/ThemeRegistry';
 import QueryClientProvider from '@/lib/query/QueryClientProvider';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
+import KakaoSDKInitializer from './chat/_components/KakaoSDKInializer';
 import './globals.css';
 
 const geistSans = localFont({
@@ -32,6 +33,7 @@ export default function RootLayout({
           <QueryClientProvider>{children}</QueryClientProvider>
         </ThemeRegistry>
       </body>
+      <KakaoSDKInitializer />
     </html>
   );
 }

@@ -1,6 +1,20 @@
 import { IconButton } from '@mui/joy';
 
 export default function ShareKakaoTalkButton() {
+  const shareOnKakaoTalk = () => {
+    if (!Kakao) return;
+    if (!Kakao.isInitialized()) return;
+
+    Kakao.Share.sendDefault({
+      objectType: 'text',
+      text: '오늘은 어떤 주제에 대한 답을 찾고 싶으신가요?\n\n궁금한 주제를 알려주시면 타로로 답을 찾아드릴게요.',
+      link: {
+        mobileWebUrl: location.href,
+        webUrl: location.href,
+      },
+    });
+  };
+
   return (
     <IconButton
       type="button"
@@ -8,7 +22,7 @@ export default function ShareKakaoTalkButton() {
       color="neutral"
       onClick={(event) => {
         event.stopPropagation();
-        alert('카톡은 배포하고 추가하려고~');
+        shareOnKakaoTalk();
       }}
     >
       <svg width="16" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
