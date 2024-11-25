@@ -1,4 +1,3 @@
-import transformMarkdownToHtml from '@/lib/remark';
 import { Box, Typography } from '@mui/joy';
 import BubbleTipSvg from './BubbleTipSvg';
 import TypingIndicator from './TypingIndicator';
@@ -7,10 +6,9 @@ interface ChatBubbleProps {
   isSender?: boolean;
   isTyping?: boolean;
   message: string;
-  markdown?: string;
 }
 
-export default function ChatBubble({ isSender, isTyping, message, markdown }: ChatBubbleProps) {
+export default function ChatBubble({ isSender, isTyping, message }: ChatBubbleProps) {
   return (
     <Box
       position="relative"
@@ -41,36 +39,9 @@ export default function ChatBubble({ isSender, isTyping, message, markdown }: Ch
           <TypingIndicator />
         </Box>
       )}
-      {!isTyping && !markdown && (
+      {!isTyping && (
         <Typography level="body-md" textColor={isSender ? '#ffffff' : '#2C2C2E'}>
           {message}
-        </Typography>
-      )}
-      {!isTyping && markdown && (
-        <Typography component="div" level="body-md" textColor={isSender ? '#ffffff' : '#2C2C2E'}>
-          <Box
-            dangerouslySetInnerHTML={{ __html: transformMarkdownToHtml(markdown) }}
-            sx={{
-              '& ul, & ol': {
-                margin: 0,
-                padding: 0,
-                listStylePosition: 'inside',
-              },
-              '& ol': {
-                listStyleType: 'decimal',
-              },
-              '& ul': {
-                listStyleType: 'none',
-              },
-              '& ul li::before': {
-                content: '"•"', // 커스텀 마커
-              },
-              '& p': {
-                display: 'inline', // p 태그를 인라인으로 표시
-                margin: 0, // p 태그의 기본 마진 제거
-              },
-            }}
-          />
         </Typography>
       )}
     </Box>

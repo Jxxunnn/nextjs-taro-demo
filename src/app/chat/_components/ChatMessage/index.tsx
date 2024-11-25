@@ -3,9 +3,8 @@ import ChatBubble from '../ChatBubble';
 interface ChatMessageProps {
   isSender?: boolean;
   message: string;
-  markdown?: string;
 }
-export default function ChatMessage({ isSender, message, markdown }: ChatMessageProps) {
+export default function ChatMessage({ isSender, message }: ChatMessageProps) {
   return (
     <>
       {isSender ? (
@@ -13,7 +12,7 @@ export default function ChatMessage({ isSender, message, markdown }: ChatMessage
       ) : (
         <Stack direction="row" gap="16px">
           <Avatar size="sm" />
-          <ChatBubble message={message} markdown={markdown} />
+          <ChatBubble message={message} />
         </Stack>
       )}
     </>
