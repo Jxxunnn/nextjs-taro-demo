@@ -1,5 +1,6 @@
 import ThemeRegistry from '@/lib/mui/ThemeRegistry';
 import QueryClientProvider from '@/lib/query/QueryClientProvider';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import KakaoSDKInitializer from './chat/_components/KakaoSDKInializer';
@@ -32,6 +33,7 @@ export default function RootLayout({
         <ThemeRegistry options={{ key: 'joy' }}>
           <QueryClientProvider>{children}</QueryClientProvider>
         </ThemeRegistry>
+        <GoogleAnalytics gaId="G-P0MWP9K8K8" />
       </body>
       <KakaoSDKInitializer />
     </html>
