@@ -45,6 +45,12 @@ export default function TarotCard({ card, sx, ...restProps }: TarotCardProps) {
         transitionProperty: 'opacity',
         transitionDuration: '1s',
         transitionTimingFunction: 'ease-in-out',
+        '&:hover': {
+          transform: 'scale(1.1)',
+          transitionProperty: 'transform',
+          transitionDuration: '0.1s',
+          transitionTimingFunction: 'ease-in-out',
+        },
         ...cardFlipStyle,
         ...sx,
       }}
