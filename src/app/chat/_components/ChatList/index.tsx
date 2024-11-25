@@ -4,6 +4,7 @@ import ChatMessage from '../ChatMessage';
 export interface ChatMessage {
   id: number;
   message: string;
+  markdown?: string;
   isSender: boolean;
   isTyping?: boolean;
 }
@@ -38,7 +39,7 @@ export default function ChatList({ chatList }: ChatListProps) {
             width="fit-content"
             marginTop={index > 0 && chatList[index - 1].isSender === chat.isSender ? '6px' : '12px'}
           >
-            <ChatMessage message={chat.message} />
+            <ChatMessage message={chat.message} markdown={chat.markdown} />
           </Box>
         )
       )}

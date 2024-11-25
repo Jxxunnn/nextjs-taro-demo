@@ -42,6 +42,17 @@ export default function ChatPage() {
       },
     ]);
   };
+  const addMarkdownChatMessage = (markdown: string, isSender: boolean) => {
+    setChatList((prevChatList) => [
+      ...prevChatList,
+      {
+        id: prevChatList.length,
+        message: '',
+        markdown,
+        isSender,
+      },
+    ]);
+  };
 
   const submit = async () => {
     if (!message || chatList.length === 0) return;
@@ -134,7 +145,7 @@ export default function ChatPage() {
 
               {
                 onSuccess: (data) => {
-                  addChatMessage(data.answer_message, false);
+                  addMarkdownChatMessage(data.answer_message, false);
                 },
                 onSettled: () => {
                   setDrawingCard(false);
