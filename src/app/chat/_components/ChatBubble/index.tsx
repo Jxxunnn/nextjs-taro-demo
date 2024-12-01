@@ -46,7 +46,13 @@ export default function ChatBubble({ isSender, isTyping, message, imgSrc }: Chat
           </Box>
         )}
         {!isTyping && (
-          <Typography level="body-md" textColor={isSender ? '#121212' : '#ffffff'}>
+          <Typography
+            level="body-md"
+            textColor={isSender ? '#121212' : '#ffffff'}
+            sx={{
+              whiteSpace: 'pre-line',
+            }}
+          >
             {message}
           </Typography>
         )}
