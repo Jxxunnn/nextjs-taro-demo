@@ -117,19 +117,29 @@ export default function ChatPage() {
           />
         </Box>
       </Stack>
-      <Modal
-        open={drawingCard}
-        slotProps={{
-          backdrop: {
-            sx: {
-              backdropFilter: 'unset',
-            },
-          },
-        }}
-      >
+      <Modal open={drawingCard}>
         <Box display="flex" alignItems="center" justifyContent="center" height="100%" flexDirection="column">
           <Typography
+            display={{
+              xs: 'none',
+              md: 'block',
+            }}
             level="h2"
+            sx={{
+              animation: `${shimmer} 2s infinite`,
+              fontWeight: 'bold',
+              textAlign: 'center',
+              marginBottom: '16px',
+            }}
+          >
+            마음에 드는 카드를 한 장 골라봐냥!
+          </Typography>
+          <Typography
+            display={{
+              xs: 'block',
+              md: 'none',
+            }}
+            level="h4"
             sx={{
               animation: `${shimmer} 2s infinite`,
               fontWeight: 'bold',
