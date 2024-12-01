@@ -170,8 +170,10 @@ export default function ChatPage() {
               mutate(
                 { question_message: chatList.filter((chat) => chat.isSender).slice(-1)[0].message, card: cardId },
                 {
-                  onSuccess: (data) => {
+                  onSuccess: async (data) => {
                     addChatMessage({ message: data.answer_message, isSender: false });
+                    await delay(2000);
+                    addChatMessage({ message: '더 궁금한 게 있다면 뭐든 물어봐냥!✨', isSender: false });
                   },
                   onSettled: () => {
                     setDrawingCard(false);
