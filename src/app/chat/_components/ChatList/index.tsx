@@ -22,7 +22,7 @@ export default function ChatList({ chatList }: ChatListProps) {
             key={chat.id}
             alignSelf="flex-end"
             maxWidth={{
-              xs: '75%',
+              xs: '85%',
               sm: '75%',
             }}
             width="fit-content"
@@ -34,7 +34,7 @@ export default function ChatList({ chatList }: ChatListProps) {
           <Box
             key={chat.id}
             maxWidth={{
-              xs: '75%',
+              xs: '85%',
               sm: '75%',
             }}
             width="fit-content"
