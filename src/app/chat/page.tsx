@@ -21,7 +21,7 @@ export default function ChatPage() {
       setChatList([
         {
           id: 0,
-          message: '오늘은 어떤 주제에 대한 답을 찾고 싶으신가요?',
+          message: '반갑다냥! 고양이 타로술사 타로냥이다냥. 궁금한 게 있다면 뭐든 물어봐냥!✨',
           isSender: false,
         },
       ]);
