@@ -1,13 +1,20 @@
 'use client';
 
 import theme from '@/lib/mui/theme';
-import { Box, CircularProgress, Modal, Stack } from '@mui/joy';
+import { Box, CircularProgress, Modal, Stack, Typography } from '@mui/joy';
 
+import { keyframes } from '@mui/system';
 import { ChangeEventHandler, FormEventHandler, useEffect, useRef, useState } from 'react';
 import ChatList, { ChatMessage } from './_components/ChatList';
 import ChatTextarea from './_components/ChatTextarea';
 import TaroDeck from './_components/TaroDeck';
 import { useSendQuestionMutation } from './_service/query';
+
+const shimmer = keyframes`
+  0% { color: #ff80ab;  }
+  50% { color: #b388ff;  }
+  100% { color: #ff80ab; }
+`;
 
 export default function ChatPage() {
   const [message, setMessage] = useState('');
@@ -120,22 +127,35 @@ export default function ChatPage() {
           },
         }}
       >
-        <TaroDeck
-          onCardSelect={(cardId) => {
-            mutate(
-              { question_message: chatList.filter((chat) => chat.isSender).slice(-1)[0].message, card: cardId },
+        <Box display="flex" alignItems="center" justifyContent="center" height="100%" flexDirection="column">
+          <Typography
+            level="h2"
+            sx={{
+              animation: `${shimmer} 2s infinite`,
+              fontWeight: 'bold',
+              textAlign: 'center',
+              marginBottom: '16px',
+            }}
+          >
+            마음에 드는 카드를 한 장 골라봐냥!
+          </Typography>
+          <TaroDeck
+            onCardSelect={(cardId) => {
+              mutate(
+                { question_message: chatList.filter((chat) => chat.isSender).slice(-1)[0].message, card: cardId },
 
-              {
-                onSuccess: (data) => {
-                  addChatMessage(data.answer_message, false);
-                },
-                onSettled: () => {
-                  setDrawingCard(false);
-                },
-              }
-            );
-          }}
-        />
+                {
+                  onSuccess: (data) => {
+                    addChatMessage(data.answer_message, false);
+                  },
+                  onSettled: () => {
+                    setDrawingCard(false);
+                  },
+                }
+              );
+            }}
+          />
+        </Box>
       </Modal>
       <Modal open={isLoading} slotProps={{ backdrop: { sx: { backdropFilter: 'unset' } } }}>
         <Box
