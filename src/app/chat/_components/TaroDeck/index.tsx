@@ -38,7 +38,7 @@ export default function TaroDeck({ onCardSelect }: TaroDeckProps) {
   };
 
   return (
-    <Box component="ul" display="flex" alignItems="center" justifyContent="center" height="100%" gap={2}>
+    <Box component="ul" display="flex" alignItems="center" justifyContent="center" gap={2}>
       {taroCardList.map((card) => (
         <TarotCard
           key={card.id}
