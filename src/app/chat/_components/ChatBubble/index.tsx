@@ -15,7 +15,7 @@ export default function ChatBubble({ isSender, isTyping, message }: ChatBubblePr
       right={isSender ? '9px' : undefined}
       paddingY="6px"
       paddingX="8px"
-      bgcolor={isSender ? '#007AFF' : '#F2F2F7'}
+      bgcolor={isSender ? 'var(--joy-palette-primary-300)' : '#333333'}
       borderRadius="6px"
       sx={{
         borderTopRightRadius: isSender ? 0 : undefined,
@@ -26,7 +26,7 @@ export default function ChatBubble({ isSender, isTyping, message }: ChatBubblePr
     >
       <BubbleTipSvg
         position={isSender ? 'right' : 'left'}
-        fill={isSender ? '#007AFF' : '#F2F2F7'}
+        fill={isSender ? 'var(--joy-palette-primary-300)' : '#333333'}
         style={{
           position: 'absolute',
           top: '-0.5px',
@@ -40,7 +40,7 @@ export default function ChatBubble({ isSender, isTyping, message }: ChatBubblePr
         </Box>
       )}
       {!isTyping && (
-        <Typography level="body-md" textColor={isSender ? '#ffffff' : '#2C2C2E'}>
+        <Typography level="body-md" textColor={isSender ? '#121212' : '#ffffff'}>
           {message}
         </Typography>
       )}

@@ -2,7 +2,7 @@
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import CssBaseline from '@mui/joy/CssBaseline';
-import { CssVarsProvider } from '@mui/joy/styles';
+import { CssVarsProvider, extendTheme } from '@mui/joy/styles';
 import { useServerInsertedHTML } from 'next/navigation';
 import { ReactNode, useState } from 'react';
 
@@ -13,6 +13,27 @@ interface ThemeRegistryProps {
   children: ReactNode;
   options: Parameters<typeof createCache>[0];
 }
+
+const extendedTheme = extendTheme({
+  colorSchemes: {
+    dark: {
+      palette: {
+        primary: {
+          50: '#ede7f6',
+          100: '#d1c4e9',
+          200: '#b388ff', // 기본 색상
+          300: '#9c7aff',
+          400: '#7c4dff',
+          500: '#6200ea',
+          600: '#5e35b1',
+          700: '#4527a0',
+          800: '#311b92',
+          900: '#1a237e',
+        },
+      },
+    },
+  },
+});
 
 export default function ThemeRegistry(props: ThemeRegistryProps) {
   const { options, children } = props;
@@ -59,7 +80,7 @@ export default function ThemeRegistry(props: ThemeRegistryProps) {
 
   return (
     <CacheProvider value={cache}>
-      <CssVarsProvider defaultMode="dark">
+      <CssVarsProvider defaultMode="dark" theme={extendedTheme}>
         <CssBaseline />
         {children}
       </CssVarsProvider>
