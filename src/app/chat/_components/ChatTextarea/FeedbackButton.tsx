@@ -1,4 +1,4 @@
-import { Button, ButtonProps, FormHelperText, Textarea, Typography } from '@mui/joy';
+import { Button, ButtonProps, FormHelperText, ModalClose, Textarea, Typography } from '@mui/joy';
 import DialogContent from '@mui/joy/DialogContent';
 import DialogTitle from '@mui/joy/DialogTitle';
 import FormControl from '@mui/joy/FormControl';
@@ -36,6 +36,7 @@ export default function FeedbackButton(props: FeedbackButtonProps) {
       </Button>
       <Modal open={open} onClose={() => setOpen(false)}>
         <ModalDialog sx={{ p: 3, width: 400 }}>
+          <ModalClose />
           <DialogTitle>피드백을 주세요 🙏</DialogTitle>
           <DialogContent>여러분의 소중한 피드백을 자유롭게 적어주세요.</DialogContent>
           <form
