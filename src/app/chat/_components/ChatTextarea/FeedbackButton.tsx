@@ -8,12 +8,17 @@ import Modal from '@mui/joy/Modal';
 import ModalDialog from '@mui/joy/ModalDialog';
 import Stack from '@mui/joy/Stack';
 import { useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
+import { useSendFeedbackMutation } from '../../_service/query';
 
 type FeedbackButtonProps = ButtonProps;
 
 export default function FeedbackButton(props: FeedbackButtonProps) {
   const [open, setOpen] = useState(false);
   const [text, setText] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const { mutate } = useSendFeedbackMutation();
 
   return (
     <>
@@ -56,20 +61,34 @@ export default function FeedbackButton(props: FeedbackButtonProps) {
               </FormControl>
               <FormControl>
                 <FormLabel>이메일 (선택사항)</FormLabel>
-                <FormHelperText>정식 버전 출시 시 알림을 받기 위해 이메일을 남겨주세요.</FormHelperText>
-                <Input name="email" />
+                <Input name="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <FormHelperText>정식 버전 출시 시 알림을 받으려면 이메일을 남겨주세요.</FormHelperText>
               </FormControl>
               <FormControl>
                 <FormLabel>전화번호 (선택사항)</FormLabel>
-                <FormHelperText>정식 버전 출시 시 알림을 받기 위해 전화번호를 남겨주세요.</FormHelperText>
-                <Input name="phone" />
+                <Input name="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                <FormHelperText>정식 버전 출시 시 알림을 받으려면 전화번호를 남겨주세요.</FormHelperText>
               </FormControl>
               <Button
                 type="submit"
                 color="primary"
                 sx={{ marginTop: 2, width: '100%' }}
                 onClick={() => {
-                  alert('제출이 완료되었습니다.');
+                  mutate(
+                    { feedback: text, email, phone },
+                    {
+                      onSuccess: () => {
+                        setText('');
+                        setEmail('');
+                        setPhone('');
+                        toast.success('피드백이 성공적으로 전송되었어요. 감사합니다!🙏');
+                      },
+                      onSettled: () => setOpen(false),
+                      onError: (error) => {
+                        toast.error('피드백을 전송하는 중 오류가 발생했어요. 다시 시도해주세요.');
+                      },
+                    }
+                  );
                 }}
               >
                 제출
@@ -78,6 +97,7 @@ export default function FeedbackButton(props: FeedbackButtonProps) {
           </form>
         </ModalDialog>
       </Modal>
+      <Toaster />
     </>
   );
 }

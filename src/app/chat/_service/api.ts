@@ -92,3 +92,26 @@ export async function sendQuestion({ question_message, card }: SendQuestionReque
     throw new Error('Failed to send question');
   }
 }
+
+interface SendFeedbackRequest {
+  feedback: string;
+  email: string;
+  phone: string;
+}
+
+export async function sendFeedback({ feedback, email, phone }: SendFeedbackRequest): Promise<void> {
+  try {
+    const response = await fetch(`${baseUrl}/v0/waitings`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ feedback, email, phone }),
+    });
+    if (!response.ok) {
+      throw new Error('Failed to send feedback');
+    }
+  } catch {
+    throw new Error('Failed to send feedback');
+  }
+}
