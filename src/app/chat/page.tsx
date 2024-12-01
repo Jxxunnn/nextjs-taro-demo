@@ -153,13 +153,15 @@ export default function ChatPage() {
             onCardSelect={(cardId) => {
               mutate(
                 { question_message: chatList.filter((chat) => chat.isSender).slice(-1)[0].message, card: cardId },
-
                 {
                   onSuccess: (data) => {
                     addChatMessage(data.answer_message, false);
                   },
                   onSettled: () => {
                     setDrawingCard(false);
+                  },
+                  onError: (error) => {
+                    addChatMessage('오류가 발생했다냥! 다시 시도해봐냥.', false);
                   },
                 }
               );
