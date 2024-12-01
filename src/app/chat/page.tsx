@@ -57,12 +57,6 @@ export default function ChatPage() {
 
     setMessage('');
 
-    await delay(1500);
-    addChatMessage('음, 잘 들었습니다.', false);
-
-    await delay(2000);
-    addChatMessage('타로 카드가 당신의 질문에 답을 줄 거예요. 카드를 뽑아보시겠어요?', false);
-
     await delay(2000);
     setDrawingCard(true);
   };
