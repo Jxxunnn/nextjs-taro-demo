@@ -10,9 +10,8 @@ export default function ShareKakaoTalkButton() {
       objectType: 'feed',
       content: {
         title: '타로냥 - 고양이 타로술사',
-        imageUrl: `https://taro-nyang.vercel.app/${OGImage.src}`,
-        description:
-          '오늘은 어떤 주제에 대한 답을 찾고 싶으신가요?\n\n궁금한 주제를 알려주시면 타로로 답을 찾아드릴게요.',
+        imageUrl: OGImage.src,
+        description: '오늘은 어떤 주제에 대한 답을 찾고 싶으신가요? 타로로 답을 찾아드릴게요.',
 
         link: {
           mobileWebUrl: location.href,
