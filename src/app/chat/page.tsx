@@ -1,7 +1,7 @@
 'use client';
 
 import theme from '@/lib/mui/theme';
-import { Box, CircularProgress, Modal, Stack, Typography } from '@mui/joy';
+import { Box, CircularProgress, Link, Modal, Stack, Typography } from '@mui/joy';
 
 import { keyframes } from '@mui/system';
 import { StaticImageData } from 'next/image';
@@ -185,6 +185,53 @@ export default function ChatPage() {
               );
             }}
           />
+          <Box
+            sx={{
+              position: 'absolute',
+              display: 'flex',
+              justifyContent: 'center',
+              padding: 2,
+              fontSize: '0.875rem',
+              bottom: 0,
+            }}
+          >
+            <Typography
+              sx={{
+                display: {
+                  xs: 'none',
+                  md: 'block',
+                },
+              }}
+            >
+              Image © Ashley Lim, licensed under CC BY 4.0 |{' '}
+              <Link
+                href="https://www.figma.com/community/file/1276447799586098149/78-tarot-cards"
+                target="_blank"
+                sx={{ color: 'primary.main' }}
+              >
+                Tarot Cards on Figma
+              </Link>
+            </Typography>
+            <Typography
+              level="body-xs"
+              sx={{
+                display: {
+                  xs: 'flex',
+                  md: 'none',
+                },
+                flexDirection: 'column',
+              }}
+            >
+              Image © Ashley Lim, licensed under CC BY 4.0
+              <Link
+                href="https://www.figma.com/community/file/1276447799586098149/78-tarot-cards"
+                target="_blank"
+                sx={{ color: 'primary.main' }}
+              >
+                Tarot Cards on Figma
+              </Link>
+            </Typography>
+          </Box>
         </Box>
       </Modal>
       <Modal open={isLoading} slotProps={{ backdrop: { sx: { backdropFilter: 'unset' } } }}>
