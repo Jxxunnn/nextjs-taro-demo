@@ -4,10 +4,12 @@ import theme from '@/lib/mui/theme';
 import { Box, CircularProgress, Modal, Stack, Typography } from '@mui/joy';
 
 import { keyframes } from '@mui/system';
+import { StaticImageData } from 'next/image';
 import { ChangeEventHandler, FormEventHandler, useEffect, useRef, useState } from 'react';
 import ChatList, { ChatMessage } from './_components/ChatList';
 import ChatTextarea from './_components/ChatTextarea';
 import TaroDeck from './_components/TaroDeck';
+import taroDeckData from './_data/tarot';
 import { useSendQuestionMutation } from './_service/query';
 
 const shimmer = keyframes`
@@ -39,13 +41,22 @@ export default function ChatPage() {
   }, []);
 
   const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-  const addChatMessage = (message: string, isSender: boolean) => {
+  const addChatMessage = ({
+    message,
+    isSender,
+    imgSrc,
+  }: {
+    message: string;
+    isSender: boolean;
+    imgSrc?: StaticImageData;
+  }) => {
     setChatList((prevChatList) => [
       ...prevChatList,
       {
         id: prevChatList.length,
         message,
         isSender,
+        imgSrc,
       },
     ]);
   };
@@ -151,17 +162,22 @@ export default function ChatPage() {
           </Typography>
           <TaroDeck
             onCardSelect={(cardId) => {
+              addChatMessage({
+                message: '',
+                isSender: false,
+                imgSrc: taroDeckData.find((card) => card.id === cardId)?.imgSrc,
+              });
               mutate(
                 { question_message: chatList.filter((chat) => chat.isSender).slice(-1)[0].message, card: cardId },
                 {
                   onSuccess: (data) => {
-                    addChatMessage(data.answer_message, false);
+                    addChatMessage({ message: data.answer_message, isSender: false });
                   },
                   onSettled: () => {
                     setDrawingCard(false);
                   },
                   onError: (error) => {
-                    addChatMessage('오류가 발생했다냥! 다시 시도해봐냥.', false);
+                    addChatMessage({ message: '오류가 발생했다냥! 다시 시도해봐냥.', isSender: false });
                   },
                 }
               );

@@ -1,4 +1,5 @@
 import { Box, Stack } from '@mui/joy';
+import { StaticImageData } from 'next/image';
 import ChatMessage from '../ChatMessage';
 
 export interface ChatMessage {
@@ -6,6 +7,7 @@ export interface ChatMessage {
   message: string;
   isSender: boolean;
   isTyping?: boolean;
+  imgSrc?: StaticImageData;
 }
 
 interface ChatListProps {
@@ -38,7 +40,7 @@ export default function ChatList({ chatList }: ChatListProps) {
             width="fit-content"
             marginTop={index > 0 && chatList[index - 1].isSender === chat.isSender ? '6px' : '12px'}
           >
-            <ChatMessage message={chat.message} />
+            <ChatMessage message={chat.message} imgSrc={chat.imgSrc} />
           </Box>
         )
       )}
