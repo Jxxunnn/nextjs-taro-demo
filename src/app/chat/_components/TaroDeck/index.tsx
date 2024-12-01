@@ -5,7 +5,7 @@ import { SendQuestionRequest } from '../../_service/api';
 import TarotCard from '../TarotCard';
 
 interface TaroDeckProps {
-  onCardSelect: (newMessage: string, cardId: SendQuestionRequest['card']) => void;
+  onCardSelect: (cardId: SendQuestionRequest['card']) => void;
 }
 
 export interface TaroCardWithIsFlipped extends TarotCardType {
@@ -44,7 +44,7 @@ export default function TaroDeck({ onCardSelect }: TaroDeckProps) {
           key={card.id}
           card={card}
           onClick={async () => {
-            onCardSelect(`당신의 질문에 대한 답은 ${card.name}입니다.`, card.id as SendQuestionRequest['card']);
+            onCardSelect(card.id as SendQuestionRequest['card']);
             flipCard(card.id);
           }}
         />

@@ -121,8 +121,7 @@ export default function ChatPage() {
         }}
       >
         <TaroDeck
-          onCardSelect={(text, cardId) => {
-            addChatMessage(text, false);
+          onCardSelect={(cardId) => {
             mutate(
               { question_message: chatList.filter((chat) => chat.isSender).slice(-1)[0].message, card: cardId },
 
