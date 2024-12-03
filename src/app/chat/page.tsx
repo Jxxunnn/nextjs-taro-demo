@@ -8,6 +8,7 @@ import { StaticImageData } from 'next/image';
 import { ChangeEventHandler, FormEventHandler, useEffect, useRef, useState } from 'react';
 import ChatList, { ChatMessage } from './_components/ChatList';
 import ChatTextarea from './_components/ChatTextarea';
+import FeedbackModal from './_components/FeedbackModal';
 import TaroDeck from './_components/TaroDeck';
 import taroDeckData from './_data/tarot';
 import { useSendQuestionMutation } from './_service/query';
@@ -24,6 +25,8 @@ export default function ChatPage() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [drawingCard, setDrawingCard] = useState(false);
   const { mutate, isLoading } = useSendQuestionMutation();
+  const [isFirstQuestionSent, setIsFirstQuestionSent] = useState(true);
+  const [openFeedbackModal, setOpenFeedbackModal] = useState(false);
 
   useEffect(function sendDelayedWelcomeMessage() {
     const timer = setTimeout(() => {
@@ -120,6 +123,9 @@ export default function ChatPage() {
           }}
         >
           <ChatTextarea
+            onFeedbackClick={() => {
+              setOpenFeedbackModal(true);
+            }}
             value={message}
             onChange={handleTextareaChange}
             onSubmit={submit}
@@ -172,6 +178,12 @@ export default function ChatPage() {
                 {
                   onSuccess: async (data) => {
                     addChatMessage({ message: data.answer_message, isSender: false });
+                    if (isFirstQuestionSent) {
+                      setTimeout(() => {
+                        setOpenFeedbackModal(true);
+                        setIsFirstQuestionSent(false);
+                      }, 20000);
+                    }
                     await delay(2000);
                     addChatMessage({ message: '더 궁금한 게 있다면 뭐든 물어봐냥!✨', isSender: false });
                   },
@@ -245,6 +257,12 @@ export default function ChatPage() {
           <CircularProgress />
         </Box>
       </Modal>
+      <FeedbackModal
+        open={openFeedbackModal}
+        onClose={() => {
+          setOpenFeedbackModal(false);
+        }}
+      />
     </>
   );
 }

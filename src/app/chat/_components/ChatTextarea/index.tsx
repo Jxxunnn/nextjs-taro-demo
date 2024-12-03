@@ -12,9 +12,17 @@ interface ChatTextareaProps extends TextareaProps {
   onSubmit: () => void;
   textareaRef: RefObject<HTMLTextAreaElement>;
   disabled: boolean;
+  onFeedbackClick: () => void;
 }
 
-export default function ChatTextarea({ value, onChange, onSubmit, textareaRef, disabled }: ChatTextareaProps) {
+export default function ChatTextarea({
+  value,
+  onChange,
+  onSubmit,
+  textareaRef,
+  disabled,
+  onFeedbackClick,
+}: ChatTextareaProps) {
   const [isComposing, setIsComposing] = useState(false);
 
   const handleCompositionStart = () => {
@@ -48,7 +56,7 @@ export default function ChatTextarea({ value, onChange, onSubmit, textareaRef, d
           <ShareXButton />
           <ShareThreadsButton />
           <ShareKakaoTalkButton />
-          <FeedbackButton sx={{ ml: 'auto' }} />
+          <FeedbackButton onFeedbackClick={onFeedbackClick} sx={{ ml: 'auto' }} />
         </Box>
       }
       endDecorator={
