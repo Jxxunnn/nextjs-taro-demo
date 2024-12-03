@@ -24,7 +24,13 @@ export default function FeedbackModal({ open, onClose }: FeedbackModalProps) {
 
   return (
     <>
-      <Modal open={open} onClose={() => onClose()}>
+      <Modal
+        open={open}
+        onClose={() => onClose()}
+        sx={{
+          zIndex: 'calc(var(--joy-zIndex-modal) + 1)',
+        }}
+      >
         <ModalDialog sx={{ p: 3, width: 400 }}>
           <ModalClose />
           <DialogTitle>피드백을 주세요 🙏</DialogTitle>
