@@ -9,6 +9,7 @@ export default function MixpanelSDKInitializer() {
       debug: true,
       track_pageview: true,
       persistence: 'localStorage',
+      record_sessions_percent: 100,
     });
   }, []);
 
