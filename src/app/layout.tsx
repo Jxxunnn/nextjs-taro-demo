@@ -4,6 +4,7 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import KakaoSDKInitializer from './chat/_components/KakaoSDKInializer';
+import MixpanelSDKInitializer from './chat/_components/MixpanelSDKInitializer';
 import './globals.css';
 
 const geistSans = localFont({
@@ -42,6 +43,7 @@ export default function RootLayout({
         </ThemeRegistry>
         <GoogleAnalytics gaId="G-P0MWP9K8K8" />
       </body>
+      <MixpanelSDKInitializer />
       <KakaoSDKInitializer />
     </html>
   );
