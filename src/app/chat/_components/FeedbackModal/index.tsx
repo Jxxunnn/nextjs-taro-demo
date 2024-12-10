@@ -14,9 +14,10 @@ import { useSendFeedbackMutation } from '../../_service/query';
 interface FeedbackModalProps {
   open: boolean;
   onClose: () => void;
+  disableCloseAction: boolean;
 }
 
-export default function FeedbackModal({ open, onClose }: FeedbackModalProps) {
+export default function FeedbackModal({ open, onClose, disableCloseAction }: FeedbackModalProps) {
   const [text, setText] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -26,13 +27,13 @@ export default function FeedbackModal({ open, onClose }: FeedbackModalProps) {
     <>
       <Modal
         open={open}
-        onClose={() => onClose()}
+        onClose={disableCloseAction ? undefined : () => onClose()}
         sx={{
           zIndex: 'calc(var(--joy-zIndex-modal) + 1)',
         }}
       >
         <ModalDialog sx={{ p: 3, width: 400 }}>
-          <ModalClose />
+          {!disableCloseAction && <ModalClose />}
           <DialogTitle>피드백을 주세요 🙏</DialogTitle>
           <DialogContent>여러분의 소중한 피드백을 자유롭게 적어주세요.</DialogContent>
           <form
@@ -46,7 +47,6 @@ export default function FeedbackModal({ open, onClose }: FeedbackModalProps) {
                 <FormLabel>피드백</FormLabel>
                 <Textarea
                   minRows={3}
-                  sx={{ marginBottom: 2 }}
                   value={text}
                   onChange={(event) => setText(event.target.value)}
                   endDecorator={
@@ -57,19 +57,15 @@ export default function FeedbackModal({ open, onClose }: FeedbackModalProps) {
                 />
               </FormControl>
               <FormControl>
-                <FormLabel>이메일 (선택사항)</FormLabel>
+                <FormLabel>이메일</FormLabel>
                 <Input name="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 <FormHelperText>정식 버전 출시 시 알림을 받으려면 이메일을 남겨주세요.</FormHelperText>
-              </FormControl>
-              <FormControl>
-                <FormLabel>전화번호 (선택사항)</FormLabel>
-                <Input name="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
-                <FormHelperText>정식 버전 출시 시 알림을 받으려면 전화번호를 남겨주세요.</FormHelperText>
               </FormControl>
               <Button
                 type="submit"
                 color="primary"
                 sx={{ marginTop: 2, width: '100%' }}
+                disabled={!text || !email}
                 onClick={() => {
                   mutate(
                     { feedback: text, email, phone },

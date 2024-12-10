@@ -25,8 +25,8 @@ export default function ChatPage() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [drawingCard, setDrawingCard] = useState(false);
   const { mutate, isLoading } = useSendQuestionMutation();
-  const [isFirstQuestionSent, setIsFirstQuestionSent] = useState(true);
   const [openFeedbackModal, setOpenFeedbackModal] = useState(false);
+  const [answeredCount, setAnsweredCount] = useState(0);
 
   useEffect(function sendDelayedWelcomeMessage() {
     const timer = setTimeout(() => {
@@ -84,6 +84,10 @@ export default function ChatPage() {
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
+    if (answeredCount === 2) {
+      setOpenFeedbackModal(true);
+      return;
+    }
     submit();
   };
 
@@ -178,12 +182,7 @@ export default function ChatPage() {
                 {
                   onSuccess: async (data) => {
                     addChatMessage({ message: data.answer_message, isSender: false });
-                    if (isFirstQuestionSent) {
-                      setTimeout(() => {
-                        setOpenFeedbackModal(true);
-                        setIsFirstQuestionSent(false);
-                      }, 20000);
-                    }
+
                     await delay(2000);
                     addChatMessage({ message: '더 궁금한 게 있다면 뭐든 물어봐냥!✨', isSender: false });
                   },
@@ -195,6 +194,7 @@ export default function ChatPage() {
                   },
                 }
               );
+              setAnsweredCount((prev) => prev + 1);
             }}
           />
           <Box
@@ -261,7 +261,11 @@ export default function ChatPage() {
         open={openFeedbackModal}
         onClose={() => {
           setOpenFeedbackModal(false);
+          if (answeredCount === 2) {
+            setAnsweredCount(3);
+          }
         }}
+        disableCloseAction={answeredCount === 2}
       />
     </>
   );
